@@ -13,12 +13,20 @@ const family = [
     role: "Father of the Bride",
   },
   {
+    name: "Joshua Manguba",
+    role: "Brother of the Bride",
+  },
+  {
     name: "Elaine Woo",
     role: "Mother of the Groom",
   },
   {
     name: "Sean Woo",
     role: "Father of the Groom",
+  },
+  {
+    name: "Tristan Woo",
+    role: "Brother of the Groom",
   },
 ];
 
@@ -32,7 +40,7 @@ const bridalParty = [
     role: "Bridesmaid",
   },
   {
-    name: "Chehani",
+    name: "Chehani Gunasekera",
     role: "Bridesmaid",
   },
   {
@@ -53,7 +61,7 @@ const groomsParty = [
     image: "",
   },
   {
-    name: "John Doe",
+    name: "Tristan Woo",
     role: "Groomsman",
     image: "",
   },
@@ -66,7 +74,7 @@ const groomsParty = [
 
 function CardGroup({ title, people }) {
   return (
-    <div className="mb-12">
+    <div className="mb-12 flex flex-col items-center">
       <h2 className="text-2xl font-semibold mb-6">{title}</h2>
       <div className="grid gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 max-w-6xl mx-auto">
         {people.map((person, index) => (
@@ -74,17 +82,20 @@ function CardGroup({ title, people }) {
             key={index}
             className="bg-white rounded-2xl shadow-lg p-4 flex flex-col items-center text-center transition hover:scale-105 duration-300"
           >
-            <div className="w-24 h-24 relative mb-4">
-              {person.image ? (
+            {/* <div className="w-24 h-24 relative mb-4"> */}
+            <div className="w-24 relative mb-4">
+              {person.image && 
                 <Image
                   src={person.image}
                   alt={person.name}
                   fill
                   className="object-cover"
                 />
-              ) : (
-                <UserCircleIcon className="w-20 h-20 text-gray-300" />
-              )}
+              
+              // : (
+              //   <UserCircleIcon className="w-20 h-20 text-gray-300" />
+              // )
+              }
             </div>
             <h3 className="text-lg font-semibold">{person.name}</h3>
             <p className="text-sm text-gray-500">{person.role}</p>

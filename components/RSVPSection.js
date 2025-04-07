@@ -6,6 +6,7 @@ import { useState } from "react";
 const guestList = [
   { code: "STINA27", name: "Christina Hua-Nguyen" },
   { code: "ABHI27", name: "Abhilarsh Vijay" },
+  { code: "TEST123", name: "Test" },
   // Add more here
 ];
 
@@ -185,9 +186,9 @@ export default function RSVPSection() {
       )}
 
       {submitted && guest && (
-        <p className="text-green-600 text-xl font-semibold mt-6 animate-pulse">
+        <p className="text-xl font-semibold mt-6 animate-pulse">
           💐 Thank you, {guest.name}! Your spot on the dance floor is officially
-          reserved 💃🕺
+          reserved 💃🕺You get 5 big booms!
         </p>
       )}
     </div>

@@ -14,7 +14,7 @@ export default function HomeSection() {
       </p>
 
       <div className="text-sm text-gray-500">
-        <p className="mb-1">Save the Date · MM/DD/2027</p>
+        <p className="mb-1">Save the Date · 09/10/2027</p>
         <p>Winnipeg, Manitoba 🍁</p>
       </div>
     </div>
