@@ -1,3 +1,4 @@
+'use client'
 import FAQSection from "@/components/FAQSection";
 import HomeSection from "@/components/HomeSection";
 import RegistrySection from "@/components/RegistrySection";
