@@ -10,12 +10,12 @@ import VenueSection from "@/components/VenueSection";
 export default function Home() {
   return (
     <main className="h-screen overflow-y-scroll scroll-smooth snap-y snap-mandatory">
-      <Section id="home"><HomeSection /></Section>
-      <Section id="venue"><VenueSection /></Section>
-      <Section id="faq"><FAQSection /></Section>
-      <Section id="team"><TeamSection /></Section>
-      <Section id="registry"><RegistrySection /></Section>
-      <Section id="rsvp"><RSVPSection /></Section>
+      <Section id="Home"><HomeSection /></Section>
+      <Section id="Venue"><VenueSection /></Section>
+      <Section id="FAQ"><FAQSection /></Section>
+      <Section id="Team"><TeamSection /></Section>
+      <Section id="Registry"><RegistrySection /></Section>
+      <Section id="RSVP"><RSVPSection /></Section>
     </main>
   )
 }
