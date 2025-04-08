@@ -8,24 +8,24 @@ export default function Navbar() {
   const [activeSection, setActiveSection] = useState("home");
 
   useEffect(() => {
-    const handleScroll = () => {
-      const offsets = sections.map((id) => {
-        const el = document.getElementById(id);
-        if (!el) return { id, top: Infinity };
-        const rect = el.getBoundingClientRect();
-        return { id, top: Math.abs(rect.top) };
-      });
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            setActiveSection(entry.target.id);
+            break;
+          }
+        }
+      },
+      { rootMargin: "-50% 0px -50% 0px", threshold: 0 }
+    );
 
-      const closest = offsets.reduce((a, b) => (a.top < b.top ? a : b));
-      setActiveSection(closest.id);
-    };
+    sections.forEach((id) => {
+      const el = document.getElementById(id);
+      if (el) observer.observe(el);
+    });
 
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    handleScroll(); // run on mount
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
+    return () => observer.disconnect();
   }, []);
 
   return (
@@ -36,7 +36,7 @@ export default function Navbar() {
             {activeSection === id && (
               <motion.div
                 layoutId="nav-indicator"
-                className="absolute -inset-y-1 inset-x-0 rounded-full bg-[#800000]/10 border-2 border-[#800000] z-0"
+                className="absolute inset-0 rounded-full bg-[#800000]/10 border-2 border-[#800000] z-0"
                 transition={{ type: "spring", bounce: 0.25, duration: 0.4 }}
               />
             )}
