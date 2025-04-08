@@ -34,14 +34,45 @@ export default function RSVPSection() {
     e.preventDefault();
     const formData = new FormData(e.target);
     const payload = Object.fromEntries(formData.entries());
-
+    if (payload.attending === "No") {
+      payload.meal = "";
+      payload.allergies = "";
+    }
     console.log("Sending RSVP:", payload, "is attending:", isAttending);
+  
+    // 🔎 Check for existing RSVP
+    const checkResponse = await fetch(
+      `https://sheetdb.io/api/v1/g73w7wi7dmnil/search?code=${payload.code}`
+    );
+    const existingEntries = await checkResponse.json();
+  
+    if (existingEntries.length > 0) {
+      // 🛠 Update existing RSVP via PUT
+      await fetch(`https://sheetdb.io/api/v1/g73w7wi7dmnil/code/${payload.code}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ data: payload }),
+      });
+    } else {
+      // ➕ First-time RSVP via POST
+      await fetch("https://sheetdb.io/api/v1/g73w7wi7dmnil", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ data: payload }),
+      });
+    }
+  
     if (payload.attending === "Yes") {
       confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
     }
-
+  
     setSubmitted(true);
   };
+  
 
   const sharedInputStyles =
     "w-full border rounded-lg p-2 bg-white text-black dark:bg-[#1f1f1f] dark:text-white";
