@@ -36,7 +36,7 @@ export default function Navbar() {
             {activeSection === id && (
               <motion.div
                 layoutId="nav-indicator"
-                className="absolute inset-0 rounded-full bg-[#800000]/10 border-2 border-[#800000] z-0"
+                className="absolute -inset-1 -inset-y-2 rounded-full bg-[#800000]/10 border-2 border-[#800000] z-0"
                 transition={{ type: "spring", bounce: 0.25, duration: 0.4 }}
               />
             )}
