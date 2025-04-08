@@ -1,7 +1,8 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/NavBar";
-import { AnimatePresence } from "framer-motion";
+import { AnimatePresence, MotionConfig } from "framer-motion";
+import { motionConfig } from "@/motion.config";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -22,10 +23,12 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <AnimatePresence>
-      <body className="bg-[#fac2ce] text-gray-800 font-sans">
-        <Navbar/>
-        {children}
-      </body>
+        <body className="bg-[#fac2ce] text-gray-800 font-sans">
+          <MotionConfig {...motionConfig}>
+            <Navbar />
+            {children}
+          </MotionConfig>
+        </body>
       </AnimatePresence>
     </html>
   );
