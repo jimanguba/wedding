@@ -71,37 +71,27 @@ const groomsParty = [
     image: "",
   },
 ];
-
-function CardGroup({ title, people }) {
+function PersonCard({ person }) {
   return (
-    <div className="mb-12 flex flex-col items-center">
-      <h2 className="text-2xl font-semibold mb-6">{title}</h2>
-      <div className="grid gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 max-w-6xl mx-auto">
-        {people.map((person, index) => (
-          <div
-            key={index}
-            className="bg-white rounded-2xl shadow-lg p-4 flex flex-col items-center text-center transition hover:scale-105 duration-300"
-          >
-            {/* <div className="w-24 h-24 relative mb-4"> */}
-            <div className="w-24 relative mb-4">
-              {person.image && 
-                <Image
-                  src={person.image}
-                  alt={person.name}
-                  fill
-                  className="object-cover"
-                />
-              
-              // : (
-              //   <UserCircleIcon className="w-20 h-20 text-gray-300" />
-              // )
-              }
-            </div>
-            <h3 className="text-lg font-semibold text-gray-900">{person.name}</h3>
-            <p className="text-sm text-gray-500">{person.role}</p>
-          </div>
-        ))}
+    <div className="w-full max-w-[250px] mx-auto bg-white rounded-2xl shadow-lg p-4 flex flex-col items-center text-center transition hover:scale-105 duration-300">
+      <div className="w-24 relative mb-4">
+        {
+          person.image && (
+            <Image
+              src={person.image}
+              alt={person.name}
+              fill
+              className="object-cover"
+            />
+          )
+
+          // : (
+          //   <UserCircleIcon className="w-20 h-20 text-gray-300" />
+          // )
+        }
       </div>
+      <h3 className="text-lg font-semibold text-gray-900">{person.name}</h3>
+      <p className="text-sm text-gray-500">{person.role}</p>
     </div>
   );
 }
@@ -110,9 +100,30 @@ export default function TeamSection() {
   return (
     <div className="text-center px-4 pt-24">
       <h1 className="text-4xl font-bold mb-8">Our Team</h1>
-      <CardGroup title="Family" people={family} />
-      <CardGroup title="Bridal Party" people={bridalParty} />
-      <CardGroup title="Groom’s Party" people={groomsParty} />
+
+      {/* Family */}
+      <h2 className="text-2xl font-semibold mb-6">Family</h2>
+      <div className="grid gap-6 sm:grid-cols-2 md:grid-cols-3 max-w-6xl mx-auto mb-12 justify-center">
+        {family.map((person, index) => (
+          <PersonCard key={index} person={person} />
+        ))}
+      </div>
+
+      {/* Bridal Party */}
+      <h2 className="text-2xl font-semibold mb-6">Bridal Party</h2>
+      <div className="grid  justify-center gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 max-w-6xl mx-auto mb-12">
+        {bridalParty.map((person, index) => (
+          <PersonCard key={index} person={person} />
+        ))}
+      </div>
+
+      {/* Groom's Party */}
+      <h2 className="text-2xl font-semibold mb-6">Groom’s Party</h2>
+      <div className="grid gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 max-w-6xl mx-auto justify-center">
+        {groomsParty.map((person, index) => (
+          <PersonCard key={index} person={person} />
+        ))}
+      </div>
     </div>
   );
 }

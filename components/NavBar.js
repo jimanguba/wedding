@@ -29,8 +29,8 @@ export default function Navbar() {
   }, []);
 
   return (
-    <nav className="fixed top-4 left-1/2 -translate-x-1/2 w-full max-w-[90%] sm:max-w-lg bg-white/80 dark:bg-[#2C2C2E]/80 backdrop-blur-sm rounded-full px-4 py-3 shadow z-50 overflow-x-auto sm:overflow-x-visible">
-      <ul className="relative flex justify-center gap-2 sm:gap-4 text-sm font-medium whitespace-nowrap px-2">
+    <nav className="fixed top-4 left-0 right-0 mx-auto w-full px-2 sm:left-1/2 sm:-translate-x-1/2 sm:max-w-lg sm:px-4 bg-white/80 dark:bg-[#2C2C2E]/80 backdrop-blur-sm rounded-full py-3 shadow z-50 overflow-x-auto sm:overflow-x-visible">
+      <ul className="relative flex justify-start sm:justify-center gap-2 sm:gap-4 text-sm font-medium whitespace-nowrap px-4">
         {sections.map((id) => (
           <li key={id} className="relative">
             {activeSection === id && (
