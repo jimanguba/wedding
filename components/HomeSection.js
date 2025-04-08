@@ -5,15 +5,15 @@ export default function HomeSection() {
         Jillian <span className="text-[color:#800000]">&</span> Braeden
       </h1>
 
-      <p className="text-xl font-medium text-gray-700 mb-2">
+      <p className="text-xl font-medium text-gray-700 dark:text-gray-300 mb-2">
         are tying the knot 💍
       </p>
 
-      <p className="text-md text-gray-600 mb-6">
+      <p className="text-md text-gray-600 dark:text-gray-200 mb-6">
         Surrounded by love, laughter, and all our favorite people 💕
       </p>
 
-      <div className="text-sm text-gray-500">
+      <div className="text-sm text-gray-500 dark:text-gray-400">
         <p className="mb-1">Save the Date · 09/10/2027</p>
         <p>Winnipeg, Manitoba 🍁</p>
       </div>

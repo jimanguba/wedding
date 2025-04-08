@@ -2,7 +2,7 @@ export default function VenueSection() {
   return (
     <div className="text-center w-full px-4">
       <h1 className="text-4xl font-bold mb-4">Venue</h1>
-      <p className="mb-4 text-lg text-gray-600">
+      <p className="mb-4 text-lg text-gray-600 dark:text-gray-300">
         Venue Location TBD · TBD, 2027 · 00:00 PM
       </p>
 

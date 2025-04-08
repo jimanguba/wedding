@@ -97,7 +97,7 @@ function CardGroup({ title, people }) {
               // )
               }
             </div>
-            <h3 className="text-lg font-semibold">{person.name}</h3>
+            <h3 className="text-lg font-semibold text-gray-900">{person.name}</h3>
             <p className="text-sm text-gray-500">{person.role}</p>
           </div>
         ))}

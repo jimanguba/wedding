@@ -98,7 +98,6 @@ export default function RSVPSection() {
                 setIsAttending(e.target.value === "Yes, I’ll be there!")
               }
             >
-              <option value="">Select</option>
               <option>Yes, I’ll be there!</option>
               <option>No, I can’t make it</option>
             </select>
