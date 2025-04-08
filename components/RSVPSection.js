@@ -16,6 +16,7 @@ export default function RSVPSection() {
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState(false);
   const [isAttending, setIsAttending] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const handleCodeSubmit = (e) => {
     e.preventDefault();
@@ -32,47 +33,57 @@ export default function RSVPSection() {
 
   const handleRSVPSubmit = async (e) => {
     e.preventDefault();
-    const formData = new FormData(e.target);
-    const payload = Object.fromEntries(formData.entries());
-    if (payload.attending === "No") {
-      payload.meal = "";
-      payload.allergies = "";
+    setLoading(true);
+    try {
+      const formData = new FormData(e.target);
+      const payload = Object.fromEntries(formData.entries());
+      if (payload.attending === "No") {
+        payload.meal = "";
+        payload.allergies = "";
+      }
+      console.log("Sending RSVP:", payload, "is attending:", isAttending);
+
+      // 🔎 Check for existing RSVP
+      const checkResponse = await fetch(
+        `https://sheetdb.io/api/v1/g73w7wi7dmnil/search?code=${payload.code}`
+      );
+      const existingEntries = await checkResponse.json();
+
+      if (existingEntries.length > 0) {
+        // 🛠 Update existing RSVP via PUT
+        await fetch(
+          `https://sheetdb.io/api/v1/g73w7wi7dmnil/code/${payload.code}`,
+          {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ data: payload }),
+          }
+        );
+      } else {
+        // ➕ First-time RSVP via POST
+        await fetch("https://sheetdb.io/api/v1/g73w7wi7dmnil", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ data: payload }),
+        });
+      }
+
+      if (payload.attending === "Yes") {
+        confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
+      }
+
+      setSubmitted(true);
+    } catch (error) {
+      console.error("Error submitting RSVP:", error);
+      alert("There was an error submitting your RSVP. Please try again.");
+    } finally {
+      setLoading(false);
     }
-    console.log("Sending RSVP:", payload, "is attending:", isAttending);
-  
-    // 🔎 Check for existing RSVP
-    const checkResponse = await fetch(
-      `https://sheetdb.io/api/v1/g73w7wi7dmnil/search?code=${payload.code}`
-    );
-    const existingEntries = await checkResponse.json();
-  
-    if (existingEntries.length > 0) {
-      // 🛠 Update existing RSVP via PUT
-      await fetch(`https://sheetdb.io/api/v1/g73w7wi7dmnil/code/${payload.code}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ data: payload }),
-      });
-    } else {
-      // ➕ First-time RSVP via POST
-      await fetch("https://sheetdb.io/api/v1/g73w7wi7dmnil", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ data: payload }),
-      });
-    }
-  
-    if (payload.attending === "Yes") {
-      confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
-    }
-  
-    setSubmitted(true);
   };
-  
 
   const sharedInputStyles =
     "w-full border rounded-lg p-2 bg-white text-black dark:bg-[#1f1f1f] dark:text-white";
@@ -111,7 +122,7 @@ export default function RSVPSection() {
           )}
           <button
             type="submit"
-            className="bg-[color:#800000] hover:bg-pink-600 text-white font-medium py-2 px-6 rounded-full"
+            className="bg-[color:#800000] hover:bg-[color:#BF4040] text-white font-medium py-2 px-6 rounded-full"
           >
             Find My RSVP
           </button>
@@ -221,9 +232,16 @@ export default function RSVPSection() {
 
                 <button
                   type="submit"
-                  className="bg-[color:#800000] hover:bg-pink-600 text-white font-medium py-2 px-6 rounded-full"
+                  disabled={loading}
+                  className={`bg-[color:#800000] hover:bg-[color:#BF4040] text-white font-medium py-2 px-6 rounded-full flex items-center justify-center ${
+                    loading ? "opacity-60 cursor-not-allowed" : ""
+                  }`}
                 >
-                  Submit RSVP
+                  {loading ? (
+                    <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                  ) : (
+                    "Submit RSVP"
+                  )}
                 </button>
               </div>
             </>
@@ -263,7 +281,7 @@ export default function RSVPSection() {
             setSubmitted(false);
             setIsAttending(null);
           }}
-          className="mt-6 bg-white dark:bg-[#1f1f1f] text-[color:#800000] border border-[color:#800000] hover:bg-[color:#800000] hover:text-white transition font-medium py-2 px-6 rounded-full"
+          className="mt-6 bg-[color:#800000] hover:bg-[color:#BF4040] text-white font-medium py-2 px-6 rounded-full"
         >
           RSVP for another guest
         </button>
