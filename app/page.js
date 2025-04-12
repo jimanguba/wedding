@@ -1,17 +1,15 @@
 'use client'
 import FAQSection from "@/components/FAQSection";
 import HomeSection from "@/components/HomeSection";
+import ModalManager from "@/components/ModalManager";
 import RegistrySection from "@/components/RegistrySection";
 import RSVPSection from "@/components/RSVPSection";
 import Section from "@/components/Section";
 import TeamSection from "@/components/TeamSection";
-import TravelModal from "@/components/TravelModal";
 import VenueSection from "@/components/VenueSection";
-import { useSearchParams } from "next/navigation";
+import { Suspense } from "react";
 
 export default function Home() {
-  const params = useSearchParams();
-const modalType = params.get("modal");
   return (
     <main className="h-screen overflow-y-scroll scroll-smooth snap-y snap-mandatory">
       <Section id="Home"><HomeSection /></Section>
@@ -20,7 +18,9 @@ const modalType = params.get("modal");
       <Section id="Team"><TeamSection /></Section>
       <Section id="Registry"><RegistrySection /></Section>
       <Section id="RSVP"><RSVPSection /></Section>
-      {modalType === "travel" && <TravelModal />}
+      <Suspense>
+        <ModalManager />
+      </Suspense>
     </main>
   )
 }
