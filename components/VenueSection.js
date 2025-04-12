@@ -1,9 +1,14 @@
+"use client";
+import { useRouter } from "next/navigation";
+
 export default function VenueSection() {
+  const router = useRouter();
+
   return (
     <div className="text-center w-full px-4">
       <h1 className="text-4xl font-bold mb-4">Venue</h1>
       <p className="mb-4 text-lg text-gray-600 dark:text-gray-300">
-        Venue Location TBD · TBD, 2027 · 00:00 PM
+        Venue Location TBD · September 10, 2027 · XX:XX PM
       </p>
 
       <div className="w-full max-w-3xl mx-auto rounded-2xl overflow-hidden shadow-lg aspect-video">
@@ -17,6 +22,12 @@ export default function VenueSection() {
           referrerPolicy="no-referrer-when-downgrade"
         ></iframe>
       </div>
+      <button
+        onClick={() => router.push("/?modal=travel", { shallow: true })}
+        className="mt-6 bg-[color:#800000] hover:bg-[color:#BF4040] text-white font-medium py-2 px-6 rounded-full"
+          >
+            Travel Info
+          </button>
     </div>
   );
 }
