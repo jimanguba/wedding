@@ -1,4 +1,3 @@
-'use client'
 import FAQSection from "@/components/FAQSection";
 import HomeSection from "@/components/HomeSection";
 import ModalManager from "@/components/ModalManager";
@@ -7,7 +6,6 @@ import RSVPSection from "@/components/RSVPSection";
 import Section from "@/components/Section";
 import TeamSection from "@/components/TeamSection";
 import VenueSection from "@/components/VenueSection";
-import { Suspense } from "react";
 
 export default function Home() {
   return (
@@ -18,9 +16,7 @@ export default function Home() {
       <Section id="Team"><TeamSection /></Section>
       <Section id="Registry"><RegistrySection /></Section>
       <Section id="RSVP"><RSVPSection /></Section>
-      <Suspense>
         <ModalManager />
-      </Suspense>
     </main>
   )
 }
