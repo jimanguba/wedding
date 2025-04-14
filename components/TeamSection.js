@@ -99,7 +99,9 @@ function PersonCard({ person }) {
 export default function TeamSection() {
   return (
     <div className="text-center px-4 pt-24">
-      <h1 className="text-4xl font-bold mb-8">Our Team</h1>
+      <h1 className="text-6xl font-serif text-heading font-bold mb-4 tracking-tight text-[#6b0d26] drop-shadow-lg z-10 relative text-center">
+        Our Team
+      </h1>
 
       {/* Family */}
       <h2 className="text-2xl font-semibold mb-6">Family</h2>

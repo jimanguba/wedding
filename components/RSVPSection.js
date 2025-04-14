@@ -102,7 +102,9 @@ export default function RSVPSection() {
 
   return (
     <div className="text-center px-4 pt-24 max-w-xl mx-auto">
-      <h1 className="text-4xl font-bold mb-8">RSVP</h1>
+      <h1 className="text-6xl font-serif text-heading font-bold mb-4 tracking-tight text-[#6b0d26] drop-shadow-lg z-10 relative text-center">
+        RSVP
+      </h1>
 
       {!guest && !submitted && (
         <form onSubmit={handleCodeSubmit} className="space-y-4">
@@ -122,7 +124,7 @@ export default function RSVPSection() {
           )}
           <button
             type="submit"
-            className="bg-[color:#800000] hover:bg-[color:#BF4040] text-white font-medium py-2 px-6 rounded-full"
+            className="bg-[color:#800000] text-white px-8 py-3 rounded-full font-semibold hover:bg-heading transition-all"
           >
             Find My RSVP
           </button>

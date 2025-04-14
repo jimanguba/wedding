@@ -6,7 +6,9 @@ export default function VenueSection() {
 
   return (
     <div className="text-center w-full px-4">
-      <h1 className="text-4xl font-bold mb-4">Venue</h1>
+      <h1 className="text-6xl font-serif text-heading font-bold mb-4 tracking-tight text-[#6b0d26] drop-shadow-lg z-10 relative text-center">
+        Venue
+      </h1>
       <p className="mb-4 text-lg text-gray-600 dark:text-gray-300">
         Venue Location TBD · September 10, 2027 · XX:XX PM
       </p>
@@ -25,9 +27,9 @@ export default function VenueSection() {
       <button
         onClick={() => router.push("/?modal=travel", { shallow: true })}
         className="mt-6 bg-[color:#800000] hover:bg-[color:#BF4040] text-white font-medium py-2 px-6 rounded-full"
-          >
-            Travel Info
-          </button>
+      >
+        Travel Info
+      </button>
     </div>
   );
 }

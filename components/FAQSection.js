@@ -48,7 +48,7 @@ const faqs = [
     question: "Can I take photos during the ceremony?",
     answer:
       "We kindly ask that you keep phones and cameras tucked away during the ceremony. We're planning an unplugged moment so everyone can be fully present with us. Don’t worry — we’ll have a professional capturing the day.",
-  }  
+  },
 ];
 
 export default function FAQSection() {
@@ -60,7 +60,9 @@ export default function FAQSection() {
 
   return (
     <div className="max-w-2xl mx-auto px-4">
-      <h1 className="text-4xl font-bold text-center mb-8">FAQ&apos;s</h1>
+      <h1 className="text-6xl font-serif text-heading font-bold mb-4 tracking-tight text-[#6b0d26] drop-shadow-lg z-10 relative text-center">
+        FAQ&apos;s
+      </h1>
       <div className="divide-y divide-gray-300">
         {faqs.map((faq, index) => {
           const isOpen = openIndex === index;
