@@ -1,7 +1,6 @@
 "use client";
 import { useSearchParams } from "next/navigation";
 import TravelModal from "./TravelModal";
-import { Suspense } from "react";
 
 export default function ModalManager() {
   const params = useSearchParams();
@@ -9,7 +8,7 @@ export default function ModalManager() {
 
   return (
     <>
-      <Suspense>{modalType === "travel" && <TravelModal />}</Suspense>
+      {modalType === "travel" && <TravelModal />}
     </>
   );
 }
