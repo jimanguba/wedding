@@ -39,11 +39,11 @@ export default function RegistrySection() {
             Your presence is more than enough, and we&apos;re not expecting any
             gifts. But, if you wish to contribute to our married life,
             <span className="block mt-2 font-medium text-[color:#800000] dark:text-[#BE7F89]">
-              come back soon to see our registry 💝
+              come back soon to see our registry
             </span>
           </p>
 
-          <div className="mt-8 inline-block bg-[color:#f3e6e6] text-[color:#800000] px-4 py-2 rounded-full text-sm font-medium shadow-sm">
+          <div className="mt-8 inline-block bg-muted/20 text-accent px-5 py-2 rounded-full text-sm font-medium shadow-sm">
             Registry Coming Soon
           </div>
         </>

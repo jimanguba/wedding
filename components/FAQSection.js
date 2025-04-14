@@ -50,27 +50,25 @@ const faqs = [
       "We kindly ask that you keep phones and cameras tucked away during the ceremony. We're planning an unplugged moment so everyone can be fully present with us. Don’t worry — we’ll have a professional capturing the day.",
   },
 ];
-
 export default function FAQSection() {
   const [openIndex, setOpenIndex] = useState(null);
-
   const toggleFAQ = (index) => {
     setOpenIndex(openIndex === index ? null : index);
   };
 
   return (
     <div className="max-w-2xl mx-auto px-4">
-      <h1 className="text-6xl font-serif text-heading font-bold mb-4 tracking-tight text-[#6b0d26] drop-shadow-lg z-10 relative text-center">
+      <h1 className="text-6xl font-serif text-heading font-bold mb-4 tracking-tight text-[#6b0d26] dark:text-[#fcd2d2] drop-shadow-lg text-center">
         FAQ&apos;s
       </h1>
-      <div className="divide-y divide-gray-300">
+      <div className="divide-y divide-muted dark:divide-gray-600">
         {faqs.map((faq, index) => {
           const isOpen = openIndex === index;
           return (
             <div key={index} className="py-4">
               <button
                 onClick={() => toggleFAQ(index)}
-                className="w-full flex justify-between items-center text-left font-semibold text-lg focus:outline-none"
+                className="w-full flex justify-between items-center text-left font-semibold text-lg text-foreground dark:text-gray-100 hover:text-accent dark:hover:text-highlight focus:outline-none"
               >
                 <span>{faq.question}</span>
                 {isOpen ? (
@@ -87,9 +85,11 @@ export default function FAQSection() {
                   opacity: isOpen ? 1 : 0,
                 }}
                 transition={{ duration: 0.3 }}
-                className="overflow-hidden text-gray-700"
+                className="overflow-hidden"
               >
-                <div className="py-2 pr-6">{faq.answer}</div>
+                <div className="py-2 pr-6 text-gray-700 dark:text-gray-300 text-base leading-relaxed">
+                  {faq.answer}
+                </div>
               </motion.div>
             </div>
           );

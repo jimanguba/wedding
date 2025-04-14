@@ -79,9 +79,8 @@ export default function HomeSection() {
       >
         RSVP Now
       </a>
-
       {/* Scroll Hint */}
-      <div className="mt-10 animate-bounce text-[color:#800000] text-sm z-10 relative tracking-wide">
+      <div className="mt-10 animate-bounce text-accent dark:text-highlight text-sm z-10 relative tracking-wide">
         ↓ Scroll to explore
       </div>
     </motion.div>
