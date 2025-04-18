@@ -16,8 +16,21 @@ export default function PushNotifications() {
 
   useEffect(() => {
     if ("serviceWorker" in navigator && "PushManager" in window) {
-      setIsSupported(true);
-      checkSubscription();
+      navigator.serviceWorker
+        .register("/sw.js", {
+          scope: "/",
+          updateViaCache: "none",
+        })
+        .then((reg) => {
+          console.log("✅ Service Worker registered:", reg);
+          setIsSupported(true);
+          checkSubscription();
+        })
+        .catch((err) => {
+          console.error("❌ Service Worker registration failed:", err);
+        });
+    } else {
+      console.warn("❌ Push not supported");
     }
   }, []);
 
@@ -28,6 +41,8 @@ export default function PushNotifications() {
 
     if (permission === "granted" && sub) {
       setSubscribed(true);
+    } else {
+      setSubscribed(false);
     }
   }
 
@@ -41,8 +56,9 @@ export default function PushNotifications() {
       setShowInstallModal(true);
       return;
     }
-
+    console.log("📬 requestPermission before:", Notification.permission);
     const permission = await Notification.requestPermission();
+    console.log("📬 requestPermission after:", permission);
 
     if (permission === "denied") {
       alert(
