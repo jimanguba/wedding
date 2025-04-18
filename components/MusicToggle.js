@@ -1,7 +1,7 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { Music, Music2, ArrowRight, Volume1, VolumeOff } from "lucide-react";
+import { useRef, useState } from "react";
+import { Volume1, VolumeOff } from "lucide-react";
 import { motion } from "framer-motion";
 import { MusicalNoteIcon } from "@heroicons/react/24/solid";
 
@@ -9,8 +9,9 @@ export default function MusicToggle() {
   const [isPlaying, setIsPlaying] = useState(false);
   const [hidden, setHidden] = useState(false);
   const [dragging, setDragging] = useState(false);
+  const dragRef = useRef(null);
 
-  const toggleMusic = () => {
+  const toggleMusic = async () => {
     const audio = document.getElementById("bg-music");
     if (!audio) return;
 
@@ -19,9 +20,11 @@ export default function MusicToggle() {
       setIsPlaying(false);
     } else {
       try {
+        if (audio.ended || audio.currentTime > 0.1) {
+          audio.currentTime = 0;
+        }
         audio.volume = 0;
-        audio.play();
-
+        await audio.play();
         let vol = 0;
         const fade = setInterval(() => {
           if (vol < 0.4) {
@@ -79,7 +82,7 @@ export default function MusicToggle() {
           className="absolute top-0 left-0 h-12 w-5 flex items-center justify-center bg-white/50 dark:bg-black/30 rounded-r-full shadow-md cursor-pointer"
           drag="x"
           dragConstraints={{ left: 0, right: 0 }}
-          dragElastic={0.2}
+          dragElastic={0.3}
           onDragStart={() => setDragging(true)}
           onDragEnd={(e, info) => {
             setDragging(false);
