@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { Bell, BellOff } from "lucide-react";
 
 function urlBase64ToUint8Array(base64String) {
   const padding = "=".repeat((4 - (base64String.length % 4)) % 4);
@@ -93,44 +94,56 @@ export default function PushNotifications() {
   async function handleUnsubscribe() {
     const registration = await navigator.serviceWorker.ready;
     const sub = await registration.pushManager.getSubscription();
-  
+
     if (sub) {
       await sub.unsubscribe();
-  
-      await fetch('/api/unsubscribe', {
-        method: 'POST',
+
+      await fetch("/api/unsubscribe", {
+        method: "POST",
         body: JSON.stringify({ endpoint: sub.endpoint }),
-        headers: { 'Content-Type': 'application/json' },
+        headers: { "Content-Type": "application/json" },
       });
-  
+
       setSubscribed(false);
-      alert('🔕 Notifications have been turned off.');
+      alert("🔕 Notifications have been turned off.");
     }
   }
-  
 
   if (!isSupported) return null;
   return (
     <>
       {subscribed ? (
-        <div className="mt-6 text-center space-y-3">
-        <p className="text-green-700 font-semibold">
-          ✅ You’re subscribed! We’ll nudge you on wedding day 💐
-        </p>
-        <button
-          onClick={handleUnsubscribe}
-          className="inline-block bg-gray-300 text-gray-800 px-6 py-2 rounded-full font-medium hover:bg-gray-400 transition-all shadow"
-        >
-          🔕 Turn Off Notifications
-        </button>
-      </div>
+        <>
+          <button
+            onClick={handleUnsubscribe}
+            className="mt-4 inline-flex items-center gap-2 bg-gray-200 hover:bg-gray-300 text-gray-700 px-5 py-2 rounded-full transition-all shadow-sm"
+          >
+            <BellOff className="w-5 h-5" />
+            Turn Off Notifications
+          </button>
+        </>
       ) : (
-        <button
+        <motion.button
           onClick={handleSubscribe}
-          className="mt-6 inline-block bg-[color:#800000] text-white px-8 py-3 rounded-full font-semibold hover:bg-heading transition-all shadow-lg"
+          className="mt-4 inline-flex items-center gap-2 bg-[color:#800000] text-white px-8 py-3 rounded-full font-semibold hover:bg-heading transition-all shadow-lg"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.2 }}
         >
-          💌 Notify Me on Wedding Day
-        </button>
+          <motion.div
+            initial={{ rotate: 0 }}
+            animate={{
+              rotate: [0, -15, 15, -12, 12, -10, 10, -5, 5, 0],
+            }}
+            transition={{
+              duration: 1.2,
+              ease: "easeInOut",
+            }}
+          >
+            <Bell className="w-5 h-5" />
+          </motion.div>
+          Notify Me on Wedding Day
+        </motion.button>
       )}
 
       <AnimatePresence>
