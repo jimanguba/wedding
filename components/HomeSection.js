@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
+import PushNotifications from "./PushNotifications";
 
 export default function HomeSection() {
   const [countdown, setCountdown] = useState("");
@@ -79,6 +80,8 @@ export default function HomeSection() {
       >
         RSVP Now
       </a>
+
+      <PushNotifications />
       {/* Scroll Hint */}
       <div className="mt-10 animate-bounce text-accent dark:text-highlight text-sm z-10 relative tracking-wide">
         ↓ Scroll to explore
