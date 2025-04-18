@@ -10,7 +10,7 @@ import { Suspense } from "react";
 
 export default function Home() {
   return (
-    <main className="h-screen overflow-y-scroll scroll-smooth snap-y snap-mandatory">
+    <main className="h-screen overflow-y-scroll scroll-smooth snap-y snap-proximity">
       <Section id="Home"><HomeSection /></Section>
       <Section id="Venue"><VenueSection /></Section>
       <Section id="FAQ"><FAQSection /></Section>
