@@ -90,13 +90,40 @@ export default function PushNotifications() {
     alert("💌 You’ll get a notification on the big day!");
   }
 
+  async function handleUnsubscribe() {
+    const registration = await navigator.serviceWorker.ready;
+    const sub = await registration.pushManager.getSubscription();
+  
+    if (sub) {
+      await sub.unsubscribe();
+  
+      await fetch('/api/unsubscribe', {
+        method: 'POST',
+        body: JSON.stringify({ endpoint: sub.endpoint }),
+        headers: { 'Content-Type': 'application/json' },
+      });
+  
+      setSubscribed(false);
+      alert('🔕 Notifications have been turned off.');
+    }
+  }
+  
+
   if (!isSupported) return null;
   return (
     <>
       {subscribed ? (
-        <p className="mt-6 text-green-700 font-semibold text-center">
+        <div className="mt-6 text-center space-y-3">
+        <p className="text-green-700 font-semibold">
           ✅ You’re subscribed! We’ll nudge you on wedding day 💐
         </p>
+        <button
+          onClick={handleUnsubscribe}
+          className="inline-block bg-gray-300 text-gray-800 px-6 py-2 rounded-full font-medium hover:bg-gray-400 transition-all shadow"
+        >
+          🔕 Turn Off Notifications
+        </button>
+      </div>
       ) : (
         <button
           onClick={handleSubscribe}
