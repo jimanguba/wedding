@@ -86,7 +86,7 @@ const PersonCard = ({ person }) => {
 
 export default function TeamSection() {
   return (
-    <div className="text-center px-4 pt-24">
+    <div className="text-center px-4 pt-24 pb-24">
       <h1 className="text-6xl font-serif text-heading font-bold mb-4 tracking-tight text-[#6b0d26] drop-shadow-lg z-10 relative text-center">
         Our Team
       </h1>

@@ -57,7 +57,7 @@ export default function FAQSection() {
   };
 
   return (
-    <div className="max-w-2xl mx-auto px-4">
+    <div className="max-w-2xl mx-auto px-4 pt-24 pb-24">
       <h1 className="text-6xl font-serif text-heading font-bold mb-4 tracking-tight text-[#6b0d26] drop-shadow-lg z-10 relative text-center">
       FAQ&apos;s
       </h1>
