@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
+import PushNotifications from "./PushNotifications";
 
 export default function HomeSection() {
   const [countdown, setCountdown] = useState("");
@@ -73,12 +74,16 @@ export default function HomeSection() {
       </p>
 
       {/* RSVP Button */}
-      <a
-        href="#RSVP"
-        className="mt-8 inline-block bg-[color:#800000] text-white px-8 py-3 rounded-full font-semibold hover:bg-heading transition-all shadow-lg z-10 relative"
-      >
-        RSVP Now
-      </a>
+      <div className="flex flex-col items-center text-center space-y-1 z-10 relative">
+        <a
+          href="#RSVP"
+          className="mt-8 inline-block bg-[color:#800000] text-white px-8 py-3 rounded-full font-semibold hover:bg-heading transition-all shadow-lg z-10 relative"
+        >
+          RSVP Now
+        </a>
+
+        <PushNotifications />
+      </div>
       {/* Scroll Hint */}
       <div className="mt-10 animate-bounce text-accent dark:text-highlight text-sm z-10 relative tracking-wide">
         ↓ Scroll to explore
