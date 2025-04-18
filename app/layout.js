@@ -21,8 +21,14 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className="bg-[#fac2ce] text-gray-800 font-sans">
-          <Navbar />
-          {children}
+        <Navbar />
+        <audio
+          id="bg-music"
+          src="/audio/piano-moment-9835.mp3"
+          loop
+          preload="auto"
+        />
+        {children}
       </body>
     </html>
   );
