@@ -1,12 +1,13 @@
 "use client";
 import { useRouter } from "next/navigation";
+import { parisienne } from "./fonts";
 
 export default function VenueSection() {
   const router = useRouter();
 
   return (
     <div className="text-center w-full px-4">
-      <h1 className="text-6xl font-serif text-heading font-bold mb-4 tracking-tight text-[#6b0d26] drop-shadow-lg z-10 relative text-center">
+      <h1 className={`text-6xl md:text-7xl tracking-tight text-black drop-shadow-md z-10 relative text-center ${parisienne.className}`}>
         Venue
       </h1>
       <p className="mb-4 text-lg text-gray-600 dark:text-gray-300">

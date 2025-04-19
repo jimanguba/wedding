@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import PushNotifications from "./PushNotifications";
 import EnvelopeInvite from "./EnvelopeInvite";
+import { parisienne } from "./fonts";
 
 export default function HomeSection() {
   const [countdown, setCountdown] = useState("");
@@ -50,14 +51,9 @@ export default function HomeSection() {
       transition={{ duration: 1 }}
     >
       {/* Names */}
-      <h1 className="text-6xl font-serif text-heading font-bold mb-4 tracking-tight text-[#6b0d26] drop-shadow-lg z-10 relative">
-        Jillian <span className="text-[color:#a00000]">&</span> Braeden
+      <h1 className={`text-6xl md:text-7xl tracking-tight text-black drop-shadow-md z-10 relative ${parisienne.className}`}>
+        Jillian  &  Braeden
       </h1>
-
-      {/* Subtitle */}
-      <p className="text-2xl font-light text-gray-800 dark:text-gray-200 mb-3 z-10 relative italic">
-        A celebration of devotion and togetherness
-      </p>
 
       {/* Date & Location */}
       <div className="text-sm text-gray-500 dark:text-gray-400 mb-3 z-10 relative">

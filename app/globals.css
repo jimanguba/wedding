@@ -39,7 +39,9 @@
   --font-serif: var(--font-serif);
   --font-mono: var(--font-mono);
 }
-
+html, body {
+  overflow-x: hidden;
+}
 /* Base body styling */
 body {
   background: var(--background);

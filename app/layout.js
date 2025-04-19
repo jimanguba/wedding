@@ -1,6 +1,7 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/NavBar";
+import SakuraPetals from "@/components/SakuraPetals";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -20,7 +21,11 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className="bg-[#fac2ce] text-gray-800 font-sans">
+      <head>
+        <link rel="stylesheet" href="/petals/sakura.css" />
+      </head>
+      <body className="bg-background text-foreground">
+        <SakuraPetals />
         <Navbar />
         <audio
           id="bg-music"
