@@ -1,7 +1,8 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import Navbar from "@/components/NavBar";
+import Navbar from "@/components/sections/NavBar";
 import SakuraPetals from "@/components/SakuraPetals";
+import ScrollToHashOnLoad from "@/components/ScrollToHashOnLoad";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -24,9 +25,9 @@ export default function RootLayout({ children }) {
       <head>
         <link rel="stylesheet" href="/petals/sakura.css" />
       </head>
-      <body className="bg-background text-foreground">
+      <body className="bg-background text-foreground" suppressHydrationWarning={true}>
+        <ScrollToHashOnLoad />
         <SakuraPetals />
-        <Navbar />
         <audio
           id="bg-music"
           src="/audio/piano-moment-9835.mp3"

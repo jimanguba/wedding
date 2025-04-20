@@ -15,6 +15,10 @@ export default function PushNotifications() {
   const [isSupported, setIsSupported] = useState(false);
   const [showInstallModal, setShowInstallModal] = useState(false);
 
+  const isIOS = typeof window !== "undefined" && /iPad|iPhone|iPod/.test(navigator.userAgent);
+  const isStandalone = typeof window !== "undefined" &&
+    (window.navigator.standalone === true || window.matchMedia("(display-mode: standalone)").matches);
+
   useEffect(() => {
     if ("serviceWorker" in navigator && "PushManager" in window) {
       navigator.serviceWorker
@@ -40,31 +44,18 @@ export default function PushNotifications() {
     const sub = await registration.pushManager.getSubscription();
     const permission = Notification.permission;
 
-    if (permission === "granted" && sub) {
-      setSubscribed(true);
-    } else {
-      setSubscribed(false);
-    }
+    setSubscribed(permission === "granted" && !!sub);
   }
 
   async function handleSubscribe() {
-    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
-    const isStandalone = window.matchMedia(
-      "(display-mode: standalone)"
-    ).matches;
-
     if (isIOS && !isStandalone) {
       setShowInstallModal(true);
       return;
     }
-    console.log("📬 requestPermission before:", Notification.permission);
-    const permission = await Notification.requestPermission();
-    console.log("📬 requestPermission after:", permission);
 
+    const permission = await Notification.requestPermission();
     if (permission === "denied") {
-      alert(
-        "🚫 Notifications are blocked. You’ll need to enable them in your settings."
-      );
+      alert("🚫 Notifications are blocked. You’ll need to enable them in your settings.");
       return;
     }
 
@@ -73,22 +64,27 @@ export default function PushNotifications() {
       return;
     }
 
-    const registration = await navigator.serviceWorker.ready;
-    const sub = await registration.pushManager.subscribe({
-      userVisibleOnly: true,
-      applicationServerKey: urlBase64ToUint8Array(
-        process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY
-      ),
-    });
+    try {
+      const registration = await navigator.serviceWorker.ready;
+      const sub = await registration.pushManager.subscribe({
+        userVisibleOnly: true,
+        applicationServerKey: urlBase64ToUint8Array(
+          process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY || ""
+        ),
+      });
 
-    await fetch("/api/subscribe", {
-      method: "POST",
-      body: JSON.stringify(sub),
-      headers: { "Content-Type": "application/json" },
-    });
+      await fetch("/api/subscribe", {
+        method: "POST",
+        body: JSON.stringify(sub),
+        headers: { "Content-Type": "application/json" },
+      });
 
-    setSubscribed(true);
-    alert("💌 You’ll get a notification on the big day!");
+      setSubscribed(true);
+      alert("💌 You’ll get a notification on the big day!");
+    } catch (err) {
+      console.error("Subscription error:", err);
+      alert("Something went wrong while subscribing.");
+    }
   }
 
   async function handleUnsubscribe() {
@@ -113,15 +109,13 @@ export default function PushNotifications() {
   return (
     <>
       {subscribed ? (
-        <>
-          <button
-            onClick={handleUnsubscribe}
-            className="mt-4 inline-flex items-center gap-2 bg-gray-200 hover:bg-gray-300 text-gray-700 px-5 py-2 rounded-full transition-all shadow-sm"
-          >
-            <BellOff className="w-5 h-5" />
-            Turn Off Notifications
-          </button>
-        </>
+        <button
+          onClick={handleUnsubscribe}
+          className="mt-4 inline-flex items-center gap-2 bg-gray-200 hover:bg-gray-300 text-gray-700 px-5 py-2 rounded-full transition-all shadow-sm"
+        >
+          <BellOff className="w-5 h-5" />
+          Turn Off Notifications
+        </button>
       ) : (
         <motion.button
           onClick={handleSubscribe}
@@ -188,7 +182,7 @@ export default function PushNotifications() {
                   </span>
                 </p>
                 <p className="italic text-muted">
-                  Just one tap and you’re set 💫
+                  Just one tap and you’re all set 💫
                 </p>
               </div>
             </motion.div>

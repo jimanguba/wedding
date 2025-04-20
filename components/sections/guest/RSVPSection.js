@@ -2,7 +2,7 @@
 
 import confetti from "canvas-confetti";
 import { useEffect, useState } from "react";
-import { parisienne } from "./fonts";
+import { parisienne } from "../../fonts";
 
 const guestList = [
   { code: "STINA27", name: "Christina Hua-Nguyen" },
@@ -12,23 +12,42 @@ const guestList = [
 ];
 
 export default function RSVPSection() {
-  const [code, setCode] = useState("");
   const [guest, setGuest] = useState(null);
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState(false);
   const [isAttending, setIsAttending] = useState(null);
   const [loading, setLoading] = useState(false);
 
-  const handleCodeSubmit = (e) => {
+  const [nameInput, setNameInput] = useState("");
+
+  const handleNameSubmit = async (e) => {
     e.preventDefault();
-    const match = guestList.find(
-      (g) => g.code.toLowerCase() === code.toLowerCase()
-    );
-    if (match) {
-      setGuest(match);
-      setError(false);
-    } else {
+    setLoading(true);
+    setError(false);
+
+    try {
+      const res = await fetch(
+        `https://sheetdb.io/api/v1/g73w7wi7dmnil/search?name=${encodeURIComponent(
+          nameInput.trim()
+        )}`
+      );
+      const data = await res.json();
+
+      if (data.length > 0) {
+        const guestData = data[0];
+
+        // Pre-fill attendance status if it exists
+        if (guestData.attending === "Yes") setIsAttending(true);
+        else if (guestData.attending === "No") setIsAttending(false);
+        setGuest(guestData);
+      } else {
+        setError(true);
+      }
+    } catch (err) {
+      console.error("Error looking up name:", err);
       setError(true);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -46,14 +65,14 @@ export default function RSVPSection() {
 
       // 🔎 Check for existing RSVP
       const checkResponse = await fetch(
-        `https://sheetdb.io/api/v1/g73w7wi7dmnil/search?code=${payload.code}`
+        `https://sheetdb.io/api/v1/g73w7wi7dmnil/search?name=${payload.name}`
       );
       const existingEntries = await checkResponse.json();
 
       if (existingEntries.length > 0) {
         // 🛠 Update existing RSVP via PUT
         await fetch(
-          `https://sheetdb.io/api/v1/g73w7wi7dmnil/code/${payload.code}`,
+          `https://sheetdb.io/api/v1/g73w7wi7dmnil/name/${payload.name}`,
           {
             method: "PUT",
             headers: {
@@ -103,43 +122,48 @@ export default function RSVPSection() {
 
   return (
     <div className="text-center px-4 pt-24 max-w-xl mx-auto">
-      <h1 className={`text-6xl md:text-7xl tracking-tight text-black drop-shadow-md z-10 relative text-center ${parisienne.className}`}>
+      <h1
+        className={`text-6xl md:text-7xl tracking-tight text-black drop-shadow-md z-10 relative text-center ${parisienne.className}`}
+      >
         RSVP
       </h1>
 
       {!guest && !submitted && (
-        <form onSubmit={handleCodeSubmit} className="space-y-4">
-          <label className="block text-lg mb-2">Enter your RSVP code</label>
+        <form onSubmit={handleNameSubmit} className="space-y-4">
+          <label className="block text-lg mb-2">Enter your full name</label>
           <input
             type="text"
-            value={code}
-            onChange={(e) => setCode(e.target.value)}
+            value={nameInput}
+            onChange={(e) => setNameInput(e.target.value)}
             className={`${sharedInputStyles} rounded-full text-center`}
-            placeholder="e.g. ABC123"
+            placeholder="Ex: Braeden Woo"
             required
           />
-          {error && (
-            <p className="text-red-500 text-sm">
-              Invalid code. Please check your invite.
-            </p>
-          )}
+
+          {error && <p className="text-red-500 text-sm">Name not found.</p>}
           <button
             type="submit"
             className="bg-[color:#800000] text-white px-8 py-3 rounded-full font-semibold hover:bg-heading transition-all"
           >
-            Find My RSVP
+            Search
           </button>
         </form>
       )}
 
       {guest && !submitted && (
         <form onSubmit={handleRSVPSubmit} className="space-y-6 text-left mt-6">
-          <input type="hidden" name="code" value={guest.code} />
+          <input type="hidden" name="email" value={guest.email} />
           <input type="hidden" name="name" value={guest.name} />
-
-          <p className="text-lg mb-4">
-            Hi <strong>{guest.name}</strong>! We’re so excited you’re here 💌
-          </p>
+          {guest.attending ? (
+            <div className="bg-yellow-50 text-yellow-800 px-4 py-3 rounded-md mb-4 text-sm border border-yellow-200">
+              You’ve already RSVP’d as <strong>{guest.attending}</strong>. Want
+              to make changes?
+            </div>
+          ) : (
+            <p className="text-lg mb-4">
+              Hi <strong>{guest.name}</strong>! We’re so excited you’re here 💌
+            </p>
+          )}
 
           <div>
             <label className="block mb-1 font-medium">
@@ -170,7 +194,12 @@ export default function RSVPSection() {
                   <label className="block mb-1 font-medium">
                     Meal Preference
                   </label>
-                  <select name="meal" required className={sharedInputStyles}>
+                  <select
+                    name="meal"
+                    defaultValue={guest.meal || ""}
+                    required
+                    className={sharedInputStyles}
+                  >
                     <option value="">Select</option>
                     <option>Chicken</option>
                     <option>Beef</option>
@@ -190,6 +219,7 @@ export default function RSVPSection() {
                     type="text"
                     className={sharedInputStyles}
                     placeholder="e.g. nuts, dairy, gluten..."
+                    defaultValue={guest.allergies || ""}
                   />
                 </div>
               )}
@@ -201,6 +231,7 @@ export default function RSVPSection() {
                   type="text"
                   className={sharedInputStyles}
                   placeholder="We'll add it to the playlist!"
+                  defaultValue={guest.song || ""}
                 />
               </div>
 
@@ -217,6 +248,7 @@ export default function RSVPSection() {
                       ? "Leave us a note!"
                       : "We’ll miss you! Leave us a note 🥹"
                   }
+                  defaultValue={guest.message || ""}
                 />
               </div>
 
@@ -225,7 +257,7 @@ export default function RSVPSection() {
                   type="button"
                   onClick={() => {
                     setGuest(null);
-                    setCode("");
+                    setNameInput("");
                     setIsAttending(null);
                   }}
                   className="text-[color:#800000] hover:underline font-medium"
@@ -256,16 +288,16 @@ export default function RSVPSection() {
         <div className="flex justify-center mt-6">
           <div className="space-y-4 text-center">
             <p className="text-xl font-semibold animate-pulse">
-              💐 Thank you, {guest.name}! Your spot on the dance floor is
-              officially reserved 💃🕺 You get 5 big booms!
+              Thank you, {guest.name}! Your spot on the dance floor is
+              officially reserved!
             </p>
-            <div
+            {/* <div
               className="tenor-gif-embed mx-auto"
               data-postid="16319214973015367077"
               data-share-method="host"
               data-aspect-ratio="1"
               data-width="50%"
-            ></div>
+            ></div> */}
           </div>
         </div>
       )}
@@ -279,7 +311,7 @@ export default function RSVPSection() {
       {submitted && (
         <button
           onClick={() => {
-            setCode("");
+            setNameInput("");
             setGuest(null);
             setSubmitted(false);
             setIsAttending(null);

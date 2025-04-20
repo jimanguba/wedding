@@ -1,7 +1,7 @@
 "use client";
 import { motion } from "framer-motion";
 
-export default function Section({ children, id }) {
+export default function Section({ children, id, full = false }) {
   return (
     <motion.section
       id={id}
@@ -9,7 +9,7 @@ export default function Section({ children, id }) {
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6 }}
       viewport={{ once: true }}
-      className="min-h-screen flex items-center justify-center px-6 snap-start"
+      className={`min-h-screen snap-start ${full ? "" : "flex items-center justify-center px-6"}`}
     >
       {children}
     </motion.section>

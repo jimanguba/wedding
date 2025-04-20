@@ -1,22 +1,20 @@
-import FAQSection from "@/components/FAQSection";
-import HomeSection from "@/components/HomeSection";
 import ModalManager from "@/components/ModalManager";
-import RegistrySection from "@/components/RegistrySection";
-import RSVPSection from "@/components/RSVPSection";
+import RegistrySection from "@/components/sections/RegistrySection";
 import Section from "@/components/Section";
-import TeamSection from "@/components/TeamSection";
-import VenueSection from "@/components/VenueSection";
 import { Suspense } from "react";
+import HomeSection from "@/components/sections/HomeSection";
+import StorySection from "@/components/sections/StorySection";
+import GuestSection from "@/components/sections/GuestSection";
+import Navbar from "@/components/sections/NavBar";
 
 export default function Home() {
   return (
     <main className="h-screen overflow-y-scroll scroll-smooth snap-y snap-proximity">
+      <Navbar sections={["Home", "Story", "Registry", "Guest"]}/>
       <Section id="Home"><HomeSection /></Section>
-      <Section id="Venue"><VenueSection /></Section>
-      <Section id="FAQ"><FAQSection /></Section>
-      <Section id="Team"><TeamSection /></Section>
+      <Section id="Story" full><StorySection /></Section>
       <Section id="Registry"><RegistrySection /></Section>
-      <Section id="RSVP"><RSVPSection /></Section>
+      <Section id="Guest"><GuestSection /></Section>
       <Suspense>
         <ModalManager />
       </Suspense>

@@ -1,6 +1,6 @@
 "use client";
 import { useRouter } from "next/navigation";
-import { parisienne } from "./fonts";
+import { parisienne } from "../../fonts";
 
 export default function VenueSection() {
   const router = useRouter();

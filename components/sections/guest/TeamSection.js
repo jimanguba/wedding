@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { UserCircleIcon } from "@heroicons/react/24/solid";
-import { parisienne } from "./fonts";
+import { parisienne } from "../../fonts";
 
 const family = [
   {
