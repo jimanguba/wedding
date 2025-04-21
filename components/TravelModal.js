@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 export default function TravelModal() {
   const router = useRouter();
 
-  const closeModal = () => router.push('/', { shallow: true });
+  const closeModal = () => router.push('/guests', { shallow: true });
 
   return (
     <AnimatePresence>

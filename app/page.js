@@ -16,9 +16,6 @@ export default function Home() {
       {/* <Section id="Story" full><StorySection /></Section> */}
       <Section id="Registry"><RegistrySection /></Section>
       <Section id="Guest"><GuestSection /></Section>
-      <Suspense>
-        <ModalManager />
-      </Suspense>
     </main>
   )
 }

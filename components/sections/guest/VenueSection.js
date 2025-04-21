@@ -26,7 +26,7 @@ export default function VenueSection() {
         ></iframe>
       </div>
       <button
-        onClick={() => router.push("/?modal=travel", { shallow: true })}
+        onClick={() => router.push("/guests?modal=travel", { shallow: true })}
         className="mt-6 bg-[color:#800000] hover:bg-[color:#BF4040] text-white font-medium py-2 px-6 rounded-full"
       >
         Travel Info

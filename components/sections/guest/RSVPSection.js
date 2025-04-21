@@ -106,8 +106,9 @@ export default function RSVPSection() {
   };
 
   const sharedInputStyles =
-    "w-full border rounded-lg p-2 bg-white text-foreground dark:bg-[#1f1f1f] dark:text-white";
+    "w-full px-4 py-2 border border-gray-300 dark:border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-accent bg-background text-foreground";
 
+  // bring the BOOM
   useEffect(() => {
     if (submitted && isAttending) {
       const script = document.createElement("script");
@@ -130,7 +131,9 @@ export default function RSVPSection() {
 
       {!guest && !submitted && (
         <form onSubmit={handleNameSubmit} className="space-y-4">
-          <label className="block text-lg mb-2">Enter your full name</label>
+          <label className="block text-sm text-muted-foreground mb-2">
+            Enter your full name
+          </label>
           <input
             type="text"
             value={nameInput}
@@ -143,7 +146,7 @@ export default function RSVPSection() {
           {error && <p className="text-red-500 text-sm">Name not found.</p>}
           <button
             type="submit"
-            className="bg-[color:#800000] text-white px-8 py-3 rounded-full font-semibold hover:bg-heading transition-all"
+            className="w-full bg-[color:#800000] text-white py-2 px-4 rounded-md font-semibold hover:bg-heading transition-all"
           >
             Search
           </button>
