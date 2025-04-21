@@ -36,7 +36,7 @@ export default function ScheduleSection() {
   return (
     <div className="pt-24 px-6 max-w-3xl mx-auto text-center">
       <motion.h2
-        className={`text-6xl md:text-7xl tracking-tight text-black drop-shadow-md z-10 relative text-center ${parisienne.className}`}
+        className={`text-6xl md:text-7xl tracking-tight text-foreground drop-shadow-md z-10 relative text-center ${parisienne.className}`}
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}

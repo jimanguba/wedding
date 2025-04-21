@@ -59,7 +59,7 @@ export default function FAQSection() {
 
   return (
     <div className="max-w-2xl mx-auto px-4 pt-24 pb-24">
-      <h1 className={`text-6xl md:text-7xl tracking-tight text-black drop-shadow-md z-10 relative text-center ${parisienne.className}`}>
+      <h1 className={`text-6xl md:text-7xl tracking-tight text-foreground drop-shadow-md z-10 relative text-center ${parisienne.className}`}>
       FAQ&apos;s
       </h1>
       <div className="divide-y divide-muted dark:divide-gray-600">

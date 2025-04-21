@@ -7,7 +7,7 @@ export default function VenueSection() {
 
   return (
     <div className="text-center w-full px-4">
-      <h1 className={`text-6xl md:text-7xl tracking-tight text-black drop-shadow-md z-10 relative text-center ${parisienne.className}`}>
+      <h1 className={`text-6xl md:text-7xl tracking-tight text-foreground drop-shadow-md z-10 relative text-center ${parisienne.className}`}>
         Venue
       </h1>
       <p className="mb-4 text-lg text-gray-600 dark:text-gray-300">

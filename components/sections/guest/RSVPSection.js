@@ -106,7 +106,7 @@ export default function RSVPSection() {
   };
 
   const sharedInputStyles =
-    "w-full border rounded-lg p-2 bg-white text-black dark:bg-[#1f1f1f] dark:text-white";
+    "w-full border rounded-lg p-2 bg-white text-foreground dark:bg-[#1f1f1f] dark:text-white";
 
   useEffect(() => {
     if (submitted && isAttending) {
@@ -123,7 +123,7 @@ export default function RSVPSection() {
   return (
     <div className="text-center px-4 pt-24 max-w-xl mx-auto">
       <h1
-        className={`text-6xl md:text-7xl tracking-tight text-black drop-shadow-md z-10 relative text-center ${parisienne.className}`}
+        className={`text-6xl md:text-7xl tracking-tight text-foreground drop-shadow-md z-10 relative text-center ${parisienne.className}`}
       >
         RSVP
       </h1>

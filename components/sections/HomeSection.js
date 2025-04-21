@@ -14,7 +14,7 @@ export default function HomeSection() {
     >
       {/* Names */}
       <h1
-        className={`text-6xl md:text-7xl tracking-tight text-black drop-shadow-md z-10 relative ${parisienne.className}`}
+        className={`text-6xl md:text-7xl tracking-tight text-foreground drop-shadow-md z-10 relative ${parisienne.className}`}
       >
         Jillian & Braeden
       </h1>

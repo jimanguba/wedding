@@ -28,7 +28,7 @@ export default function GuestHomeSection() {
 
       {/* Names */}
       <h1
-        className={`mt-4 text-6xl md:text-7xl tracking-tight text-black drop-shadow-md z-10 relative ${parisienne.className}`}
+        className={`mt-4 text-6xl md:text-7xl tracking-tight text-foreground drop-shadow-md z-10 relative ${parisienne.className}`}
       >
         Jillian & Braeden
       </h1>

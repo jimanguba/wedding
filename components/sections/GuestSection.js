@@ -20,7 +20,7 @@ export default function GuestSection() {
   return (
     <div className="text-center px-4 pt-24 max-w-2xl mx-auto">
       <h1
-        className={`text-6xl md:text-7xl tracking-tight text-black drop-shadow-md z-10 relative text-center ${parisienne.className}`}
+        className={`text-6xl md:text-7xl tracking-tight text-foreground drop-shadow-md z-10 relative text-center ${parisienne.className}`}
       >
         Guest Access
       </h1>
