@@ -14,7 +14,7 @@ export default function GuestSection() {
     if (code.trim().toLowerCase() === "woomance") {
       router.push("/guests");
     } else {
-      setError("Incorrect code. Try again, cutie.");
+      setError("Incorrect code. Please check the invitation and try again.");
     }
   };
 
