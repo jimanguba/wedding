@@ -9,6 +9,7 @@ export default function AdminPage() {
   const [message, setMessage] = useState("");
   const [status, setStatus] = useState("");
   const [title, setTitle] = useState("");
+  const [history, setHistory] = useState([]);
 
   useEffect(() => {
     const userSecret = prompt("🔐 Enter admin passphrase");
@@ -18,6 +19,14 @@ export default function AdminPage() {
       alert("🚫 Access denied");
     }
   }, []);
+
+  useEffect(() => {
+    if (accessGranted) {
+      fetch("/api/notification-history")
+        .then((res) => res.json())
+        .then((data) => setHistory(data));
+    }
+  }, [accessGranted, status]); // refresh after send
 
   async function sendNotification() {
     const confirmed = confirm(
@@ -77,6 +86,25 @@ export default function AdminPage() {
       </button>
 
       {status && <p className="mt-4 text-sm">{status}</p>}
+
+      {history.length > 0 && (
+        <div className="mt-10 text-left">
+          <h2 className="text-lg font-bold mb-3">
+            📜 Sent Notification History
+          </h2>
+          <ul className="space-y-4 text-sm">
+            {history.map((n) => (
+              <li key={n.id} className="p-4 rounded-lg bg-gray-100 border">
+                <div className="font-semibold">{n.title}</div>
+                <div>{n.message}</div>
+                <div className="text-xs text-muted mt-1">
+                  {new Date(n.sent_at).toLocaleString()}
+                </div>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
     </main>
   );
 }

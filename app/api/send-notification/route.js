@@ -47,6 +47,18 @@ export async function POST(req) {
   );
 
   const failedCount = results.filter((r) => r.status === "rejected").length;
+  const { error: logError } = await supabase
+    .from("notification_history")
+    .insert([
+      {
+        title: title || "💌 Wedding Day!",
+        message: body || "Get ready to celebrate!",
+      },
+    ]);
+
+  if (logError) {
+    console.error("🛑 Failed to save to history:", logError);
+  }
 
   return NextResponse.json({
     success: true,
