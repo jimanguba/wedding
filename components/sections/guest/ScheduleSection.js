@@ -6,18 +6,18 @@ import { CalendarDays, MapPin, Clock } from "lucide-react";
 export default function ScheduleSection() {
   const schedule = [
     {
-      title: "Ceremony",
-      date: "Friday, September 10, 2025",
+      title: "Ceremony & Reception",
+      date: "Friday, September 10, 2027",
       time: "TBA",
       location: "TBA",
-      dressCode: "Semi-formal",
+      dressCode: "TBD",
     },
-    {
-      title: "Reception",
-      time: "TBA",
-      location: "TBA",
-      dressCode: "Dress to impress",
-    },
+    // {
+    //   title: "Reception",
+    //   time: "TBA",
+    //   location: "TBA",
+    //   dressCode: "Dress to impress",
+    // },
     // {
     //   title: "After Party",
     //   time: "9:00 PM",
@@ -43,8 +43,10 @@ export default function ScheduleSection() {
       >
         Schedule
       </motion.h2>
-
-      <div className="space-y-8 text-left text-gray-700 dark:text-gray-300">
+      <p className="text-sm text-neutral-500 mt-4 tracking-wider uppercase">
+            TBA
+          </p>
+      {/* <div className="space-y-8 text-left text-gray-700 dark:text-gray-300">
         {schedule.map((event, idx) => (
           <motion.div
             key={idx}
@@ -72,7 +74,7 @@ export default function ScheduleSection() {
             </p>
           </motion.div>
         ))}
-      </div>
+      </div> */}
     </div>
   );
 }
