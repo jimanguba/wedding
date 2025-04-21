@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Bell, BellOff } from "lucide-react";
+import { Apple, Bell, BellOff, Heart, Share, SquarePlus } from "lucide-react";
 
 function urlBase64ToUint8Array(base64String) {
   const padding = "=".repeat((4 - (base64String.length % 4)) % 4);
@@ -15,9 +15,13 @@ export default function PushNotifications() {
   const [isSupported, setIsSupported] = useState(false);
   const [showInstallModal, setShowInstallModal] = useState(false);
 
-  const isIOS = typeof window !== "undefined" && /iPad|iPhone|iPod/.test(navigator.userAgent);
-  const isStandalone = typeof window !== "undefined" &&
-    (window.navigator.standalone === true || window.matchMedia("(display-mode: standalone)").matches);
+  const isIOS =
+    typeof window !== "undefined" &&
+    /iPad|iPhone|iPod/.test(navigator.userAgent);
+  const isStandalone =
+    typeof window !== "undefined" &&
+    (window.navigator.standalone === true ||
+      window.matchMedia("(display-mode: standalone)").matches);
 
   useEffect(() => {
     if ("serviceWorker" in navigator && "PushManager" in window) {
@@ -54,7 +58,9 @@ export default function PushNotifications() {
 
     const permission = await Notification.requestPermission();
     if (permission === "denied") {
-      alert("🚫 Notifications are blocked. You’ll need to enable them in your settings.");
+      alert(
+        "🚫 Notifications are blocked. You’ll need to enable them in your settings."
+      );
       return;
     }
 
@@ -160,27 +166,26 @@ export default function PushNotifications() {
               >
                 ×
               </button>
-              <h2 className="text-xl font-bold text-center mb-4">
-                📲 Add to Home Screen
+              <h2 className="text-xl font-bold text-center mb-4 flex justify-center items-center gap-2">
+                <Apple className="w-5 h-5" />
+                Add to Home Screen
               </h2>
               <div className="text-gray-700 space-y-4 text-sm text-center">
                 <p>
-                  To receive notifications, please install this app to your
-                  iPhone home screen.
+                  Add this app to your iPhone Home Screen to unlock push
+                  notifications.
                 </p>
                 <p>
-                  To install this app on your iOS device, tap the share button{" "}
-                  <span role="img" aria-label="share icon">
-                    ⎋
-                  </span>
+                  Simply tap the share button{" "}
+                  <Share className="inline-block w-5 h-5 align-middle mx-1" />
                   <br />
-                  then <strong>&quot;Add to Home Screen&quot;</strong>{" "}
-                  <span role="img" aria-label="plus icon">
-                    ➕
-                  </span>
+                  then choose &quot;Add to Home Screen&quot;{" "}
+                  <SquarePlus className="inline-block w-5 h-5 align-middle mx-1" />
                 </p>
                 <p className="italic text-muted">
-                  Just one tap and you’re all set 💫
+                  After adding the app to your Home Screen, open it and tap the
+                  notifications icon once again to allow push notifications
+                  <Heart className="inline-block w-5 h-5 align-middle mx-1" />
                 </p>
               </div>
             </motion.div>
