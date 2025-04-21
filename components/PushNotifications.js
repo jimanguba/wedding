@@ -28,7 +28,6 @@ export default function PushNotifications() {
         })
         .then((reg) => {
           console.log("✅ Service Worker registered:", reg);
-          setIsSupported(true);
           checkSubscription();
         })
         .catch((err) => {
@@ -105,7 +104,6 @@ export default function PushNotifications() {
     }
   }
 
-  if (!isSupported) return null;
   return (
     <>
       {subscribed ? (
