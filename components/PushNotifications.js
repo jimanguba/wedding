@@ -59,14 +59,19 @@ export default function PushNotifications() {
       return;
     }
   
-    const response = await fetch("/api/check-subscription", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ endpoint: sub.endpoint }),
-    });
+    try {
+      const response = await fetch("/api/check-subscription", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ endpoint: sub.endpoint }),
+      });
   
-    const data = await response.json();
-    setSubscribed(data.exists);
+      const { exists } = await response.json();
+      setSubscribed(exists);
+    } catch (err) {
+      console.error("Subscription check failed:", err);
+      setSubscribed(false);
+    }
   }
 
   async function handleSubscribe() {
