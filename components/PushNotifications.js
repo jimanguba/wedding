@@ -1,7 +1,15 @@
 "use client";
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Apple, Bell, BellOff, Heart, Share, SquarePlus } from "lucide-react";
+import {
+  Apple,
+  Bell,
+  BellOff,
+  Heart,
+  Share,
+  SquarePlus,
+  X,
+} from "lucide-react";
 
 function urlBase64ToUint8Array(base64String) {
   const padding = "=".repeat((4 - (base64String.length % 4)) % 4);
@@ -46,8 +54,19 @@ export default function PushNotifications() {
     const registration = await navigator.serviceWorker.ready;
     const sub = await registration.pushManager.getSubscription();
     const permission = Notification.permission;
-
-    setSubscribed(permission === "granted" && !!sub);
+    if (!sub || permission !== "granted") {
+      setSubscribed(false);
+      return;
+    }
+  
+    const response = await fetch("/api/check-subscription", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ endpoint: sub.endpoint }),
+    });
+  
+    const data = await response.json();
+    setSubscribed(data.exists);
   }
 
   async function handleSubscribe() {
@@ -118,7 +137,7 @@ export default function PushNotifications() {
           className="mt-4 inline-flex items-center gap-2 bg-gray-200 hover:bg-gray-300 text-gray-700 px-5 py-2 rounded-full transition-all shadow-sm"
         >
           <BellOff className="w-5 h-5" />
-          Turn Off Notifications
+          Mute Notifications
         </button>
       ) : (
         <motion.button
@@ -140,7 +159,7 @@ export default function PushNotifications() {
           >
             <Bell className="w-5 h-5" />
           </motion.div>
-          Notify Me on Wedding Day
+          Notify Me
         </motion.button>
       )}
 
@@ -164,7 +183,7 @@ export default function PushNotifications() {
                 className="absolute top-3 right-4 text-gray-500 hover:text-red-500 text-xl"
                 onClick={() => setShowInstallModal(false)}
               >
-                ×
+                <X />
               </button>
               <h2 className="text-xl font-bold text-center mb-4 flex justify-center items-center gap-2">
                 <Apple className="w-5 h-5" />
