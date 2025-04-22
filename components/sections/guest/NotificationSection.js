@@ -1,5 +1,5 @@
 import { parisienne } from "@/components/fonts";
-import PushNotifications from "@/components/PushNotifications";
+import PushNotifications from "@/components/notification/PushNotifications";
 
 export default function NotificationSection() {
   return (

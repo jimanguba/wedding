@@ -3,6 +3,8 @@ import { parisienne } from "../fonts";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
+const GUEST_SECRET = process.env.NEXT_PUBLIC_GUEST_SECRET;
+
 export default function GuestSection() {
   const [code, setCode] = useState("");
   const [error, setError] = useState("");
@@ -11,7 +13,7 @@ export default function GuestSection() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (code.trim().toLowerCase() === "woomance") {
+    if (code.trim().toLowerCase() === GUEST_SECRET) {
       router.push("/guests");
     } else {
       setError("Incorrect code. Please check the invitation and try again.");

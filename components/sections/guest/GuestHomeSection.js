@@ -3,10 +3,10 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
-import EnvelopeInvite from "@/components/EnvelopeInvite";
-import PushNotifications from "@/components/PushNotifications";
+import EnvelopeInvite from "@/components/sections/guest/home/EnvelopeInvite";
+import PushNotifications from "@/components/notification/PushNotifications";
 import { parisienne } from "@/components/fonts";
-import Countdown from "@/components/Countdown";
+import Countdown from "@/components/sections/guest/home/Countdown";
 import { ArrowLeft } from "lucide-react";
 
 export default function GuestHomeSection() {

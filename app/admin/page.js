@@ -1,15 +1,22 @@
 "use client";
 
+import { useApp } from "@/context/AppContext";
+import {
+  sendNotification,
+  deleteNotification,
+} from "@/lib/api/notificationApi";
+import { Trash } from "lucide-react";
 import { useEffect, useState } from "react";
 
 const ADMIN_SECRET = process.env.NEXT_PUBLIC_ADMIN_SECRET;
 
 export default function AdminPage() {
   const [accessGranted, setAccessGranted] = useState(false);
+  const [title, setTitle] = useState("");
   const [message, setMessage] = useState("");
   const [status, setStatus] = useState("");
-  const [title, setTitle] = useState("");
-  const [history, setHistory] = useState([]);
+
+  const { notificationHistory, refreshNotifications } = useApp();
 
   useEffect(() => {
     const userSecret = prompt("🔐 Enter admin passphrase");
@@ -20,15 +27,7 @@ export default function AdminPage() {
     }
   }, []);
 
-  useEffect(() => {
-    if (accessGranted) {
-      fetch("/api/notification-history")
-        .then((res) => res.json())
-        .then((data) => setHistory(data));
-    }
-  }, [accessGranted, status]); // refresh after send
-
-  async function sendNotification() {
+  async function handleSend() {
     const confirmed = confirm(
       "⚠️ This message will be sent to EVERYONE who subscribed.\nAre you sure you want to do this?"
     );
@@ -36,17 +35,23 @@ export default function AdminPage() {
 
     setStatus("Sending...");
 
-    const res = await fetch("/api/send-notification", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        title: title || "💌 Wedding Day!",
-        body: message || "Get ready to celebrate!",
-      }),
-    });
+    const res = await sendNotification({ title, body: message });
+    setStatus(res.success ? "✅ Notification sent!" : "❌ Failed to send.");
+    setTitle("");
+    setMessage("");
+    refreshNotifications();
+  }
 
-    const data = await res.json();
-    setStatus(data.success ? "✅ Notification sent!" : "❌ Failed to send.");
+  async function handleDelete(id) {
+    const confirmDelete = confirm("🗑️ Delete this notification?");
+    if (!confirmDelete) return;
+
+    const res = await deleteNotification(id);
+    if (res.success) {
+      refreshNotifications();
+    } else {
+      alert("❌ Failed to delete notification");
+    }
   }
 
   if (!accessGranted) return null;
@@ -79,7 +84,7 @@ export default function AdminPage() {
       />
 
       <button
-        onClick={sendNotification}
+        onClick={handleSend}
         className="bg-[color:#800000] text-white px-6 py-2 rounded-full font-semibold hover:bg-heading transition-all shadow-lg"
       >
         🚀 Send Notification
@@ -87,16 +92,27 @@ export default function AdminPage() {
 
       {status && <p className="mt-4 text-sm">{status}</p>}
 
-      {history.length > 0 && (
+      {notificationHistory.length > 0 && (
         <div className="mt-10 text-left">
           <h2 className="text-lg font-bold mb-3">
             📜 Sent Notification History
           </h2>
           <ul className="space-y-4 text-sm">
-            {history.map((n) => (
-              <li key={n.id} className="p-4 rounded-lg bg-gray-100 border">
+            {notificationHistory.map((n) => (
+              <li
+                key={n.id}
+                className="p-4 rounded-lg bg-gray-100 border relative dark:text-background"
+              >
+                <button
+                  onClick={() => handleDelete(n.id)}
+                  className="absolute top-1/2 -translate-y-1/2 right-4 text-red-400 hover:text-red-600 transition"
+                  aria-label="Delete notification"
+                >
+                  <Trash size={18} />
+                </button>
+
                 <div className="font-semibold">{n.title}</div>
-                <div>{n.message}</div>
+                <div className="mr-8">{n.message}</div>
                 <div className="text-xs text-muted mt-1">
                   {new Date(n.sent_at).toLocaleString()}
                 </div>
