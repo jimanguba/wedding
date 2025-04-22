@@ -114,7 +114,7 @@ export default function NotificationHistoryToggle() {
                         </button>
                         <p className="font-medium">{item.title}</p>
 
-                        <p>{item.message}</p>
+                        <p className="pr-10">{item.message}</p>
                         <p className="text-xs text-gray-400">
                           {new Date(item.sent_at).toLocaleString()}
                         </p>
