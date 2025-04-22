@@ -3,16 +3,21 @@
 import { useEffect, useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Bell, Trash, X } from "lucide-react";
+import { useApp } from "@/context/AppContext";
 
 export default function NotificationHistoryToggle() {
   const [hidden, setHidden] = useState(false);
   const [open, setOpen] = useState(false);
-  const [history, setHistory] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
   const dragRef = useRef(null);
   const [dismissedIds, setDismissedIds] = useState([]);
   const [showAll, setShowAll] = useState(false);
+  const {
+    notificationHistory,
+    notificationError,
+    notificationsLoading,
+    refreshNotifications,
+  } = useApp();
+
   useEffect(() => {
     const stored = localStorage.getItem("dismissed_notifications");
     setDismissedIds(stored ? JSON.parse(stored) : []);
@@ -21,20 +26,10 @@ export default function NotificationHistoryToggle() {
   // Fetch history when opened
   useEffect(() => {
     if (open) {
-      setLoading(true);
-      fetch("/api/notification-history")
-        .then((res) => res.json())
-        .then((data) => {
-          setHistory(data);
-          setLoading(false);
-        })
-        .catch((err) => {
-          console.error("Failed to load history", err);
-          setError("Unable to load notifications.");
-          setLoading(false);
-        });
+      refreshNotifications()
     }
   }, [open]);
+  
   const handleDismiss = (id) => {
     const updated = [...dismissedIds, id];
     setDismissedIds(updated);
@@ -96,13 +91,13 @@ export default function NotificationHistoryToggle() {
                     <X className="w-4 h-4" />
                   </button>
                 </div>
-                {loading && <p className="text-sm">Loading...</p>}
-                {error && <p className="text-sm text-red-500">{error}</p>}
-                {!loading && history.length === 0 && (
+                {notificationsLoading && <p className="text-sm">Loading...</p>}
+                {notificationError && <p className="text-sm text-red-500">{notificationError}</p>}
+                {!notificationsLoading && notificationHistory.length === 0 && (
                   <p className="text-sm text-gray-600">No notifications yet.</p>
                 )}
                 <ul className="text-sm space-y-3 max-h-60 overflow-y-auto">
-                  {history
+                  {notificationHistory
                     .filter(
                       (item) => showAll || !dismissedIds.includes(item.id)
                     )

@@ -10,6 +10,11 @@ import {
   SquarePlus,
   X,
 } from "lucide-react";
+import { useApp } from "@/context/AppContext";
+import {
+  subscribeToPushApi,
+  unsubscribeFromPushApi,
+} from "@/lib/api/notificationApi";
 
 function urlBase64ToUint8Array(base64String) {
   const padding = "=".repeat((4 - (base64String.length % 4)) % 4);
@@ -19,10 +24,8 @@ function urlBase64ToUint8Array(base64String) {
 }
 
 export default function PushNotifications() {
-  const [subscribed, setSubscribed] = useState(false);
-  const [isSupported, setIsSupported] = useState(false);
   const [showInstallModal, setShowInstallModal] = useState(false);
-
+  const { subscribed, setSubscribed, checkSubscription } = useApp();
   const isIOS =
     typeof window !== "undefined" &&
     /iPad|iPhone|iPod/.test(navigator.userAgent);
@@ -49,30 +52,6 @@ export default function PushNotifications() {
       console.warn("❌ Push not supported");
     }
   }, []);
-
-  async function checkSubscription() {
-    const registration = await navigator.serviceWorker.ready;
-    const sub = await registration.pushManager.getSubscription();
-    const permission = Notification.permission;
-    if (!sub || permission !== "granted") {
-      setSubscribed(false);
-      return;
-    }
-  
-    try {
-      const response = await fetch("/api/check-subscription", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ endpoint: sub.endpoint }),
-      });
-  
-      const { exists } = await response.json();
-      setSubscribed(exists);
-    } catch (err) {
-      console.error("Subscription check failed:", err);
-      setSubscribed(false);
-    }
-  }
 
   async function handleSubscribe() {
     if (isIOS && !isStandalone) {
@@ -102,11 +81,7 @@ export default function PushNotifications() {
         ),
       });
 
-      await fetch("/api/subscribe", {
-        method: "POST",
-        body: JSON.stringify(sub),
-        headers: { "Content-Type": "application/json" },
-      });
+      await subscribeToPushApi(sub);
 
       setSubscribed(true);
       alert("💌 You’ll get a notification on the big day!");
@@ -122,12 +97,7 @@ export default function PushNotifications() {
 
     if (sub) {
       await sub.unsubscribe();
-
-      await fetch("/api/unsubscribe", {
-        method: "POST",
-        body: JSON.stringify({ endpoint: sub.endpoint }),
-        headers: { "Content-Type": "application/json" },
-      });
+      await unsubscribeFromPushApi(sub.endpoint);
 
       setSubscribed(false);
       alert("🔕 Notifications have been turned off.");

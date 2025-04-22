@@ -8,7 +8,7 @@ import RSVPSection from "@/components/sections/guest/RSVPSection";
 import VenueSection from "@/components/sections/guest/VenueSection";
 import TeamSection from "@/components/sections/guest/TeamSection";
 import NotificationSection from "@/components/sections/guest/NotificationSection";
-import NotificationHistoryToggle from "@/components/NotificationHistoryToggle";
+import NotificationHistoryToggle from "@/components/notification/NotificationHistoryToggle";
 
 export default function Guests() {
   return (

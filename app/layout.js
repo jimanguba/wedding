@@ -3,6 +3,7 @@ import "./globals.css";
 import Navbar from "@/components/sections/NavBar";
 import SakuraPetals from "@/components/SakuraPetals";
 import ScrollToHashOnLoad from "@/components/ScrollToHashOnLoad";
+import { AppProvider } from "@/context/AppContext";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -34,7 +35,7 @@ export default function RootLayout({ children }) {
           loop
           preload="auto"
         />
-        {children}
+        <AppProvider>{children}</AppProvider>
       </body>
     </html>
   );
