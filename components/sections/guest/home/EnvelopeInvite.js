@@ -89,9 +89,9 @@ export default function EnvelopeInvite({ onOpen }) {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1 }}
-          className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white font-medium text-sm z-30"
+          className="absolute top-[45%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white font-medium text-sm z-30"
         >
-          Tap to Open 💌
+          Tap to Open
         </motion.button>
       )}
     </div>

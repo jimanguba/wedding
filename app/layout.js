@@ -1,19 +1,8 @@
-import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import Navbar from "@/components/sections/NavBar";
 import SakuraPetals from "@/components/SakuraPetals";
 import ScrollToHashOnLoad from "@/components/ScrollToHashOnLoad";
 import { AppProvider } from "@/context/AppContext";
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+import "@/public/petals/sakura.css";
 
 export const metadata = {
   title: "Jillian and Braedens Wedding",
@@ -23,9 +12,6 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <head>
-        <link rel="stylesheet" href="/petals/sakura.css" />
-      </head>
       <body className="bg-background text-foreground" suppressHydrationWarning={true}>
         <ScrollToHashOnLoad />
         <SakuraPetals />

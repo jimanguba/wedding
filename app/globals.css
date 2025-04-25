@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Alegreya:ital,wght@0,400..900;1,400..900&family=Merriweather:ital,opsz,wght@0,18..144,300..900;1,18..144,300..900&family=Parisienne&display=swap');
 @import "tailwindcss";
 
 /* Light theme */
@@ -10,7 +11,7 @@
   --heading: #9a4f32;         /* rust */
 
   --font-sans: 'Inter', var(--font-geist-sans), sans-serif;
-  --font-serif: 'Playfair Display', serif;
+  --font-serif: 'Merriweather', serif;
   --font-mono: var(--font-geist-mono);
 }
 
@@ -46,7 +47,7 @@ html, body {
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-sans);
+  font-family: var(--font-serif);
   line-height: 1.6;
   letter-spacing: 0.01em;
 }

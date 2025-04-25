@@ -11,7 +11,7 @@ export default function NotificationSection() {
       </h1>
       <p className="mt-4 text-gray-600 dark:text-gray-300 text-sm mb-6">
         Would you like to receive gentle reminders and thoughtful updates as our
-        wedding day draws near? We’d love to keep you in the loop as we count
+        wedding day draws near? <br /> We’d love to keep you in the loop as we count
         down to “I do.”
       </p>
       <PushNotifications />

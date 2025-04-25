@@ -10,10 +10,9 @@ import Navbar from "@/components/sections/NavBar";
 export default function Home() {
   return (
     <main className="h-screen overflow-y-scroll scroll-smooth snap-y snap-proximity">
-      {/* <Navbar sections={["Home", "Story", "Registry", "Guest"]}/> */}
-      <Navbar sections={["Home", "Registry", "Guest"]}/>
+      <Navbar sections={["Home", "Story", "Registry", "Guest"]}/>
       <Section id="Home"><HomeSection /></Section>
-      {/* <Section id="Story" full><StorySection /></Section> */}
+      <Section id="Story" full><StorySection /></Section>
       <Section id="Registry"><RegistrySection /></Section>
       <Section id="Guest"><GuestSection /></Section>
     </main>
