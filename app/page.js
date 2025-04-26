@@ -12,7 +12,7 @@ export default function Home() {
     <main className="h-screen overflow-y-scroll scroll-smooth snap-y snap-proximity">
       <Navbar sections={["Home", "Story", "Registry", "Guest"]}/>
       <Section id="Home"><HomeSection /></Section>
-      <Section id="Story" full><StorySection /></Section>
+      <div id="Story"><StorySection /></div>
       <Section id="Registry"><RegistrySection /></Section>
       <Section id="Guest"><GuestSection /></Section>
     </main>
