@@ -9,7 +9,7 @@ import Navbar from "@/components/sections/NavBar";
 
 export default function Home() {
   return (
-    <main className="h-screen overflow-y-scroll scroll-smooth snap-y snap-proximity">
+    <main className="h-screen overflow-y-scroll overflow-x-hidden scroll-smooth snap-y snap-proximity">
       <Navbar sections={["Home", "Story", "Registry", "Guest"]}/>
       <Section id="Home"><HomeSection /></Section>
       <div id="Story"><StorySection /></div>
