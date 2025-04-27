@@ -12,6 +12,8 @@ export default function Navbar({ sections }) {
         for (const entry of entries) {
           if (entry.isIntersecting) {
             setActiveSection(entry.target.id);
+            const activeButton = document.querySelector(`button[data-id="${entry.target.id}"]`);
+            activeButton?.scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" });
             break;
           }
         }
