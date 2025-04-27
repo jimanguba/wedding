@@ -14,12 +14,12 @@ export default function Guests() {
   return (
     <main className="h-screen overflow-y-scroll scroll-smooth snap-y snap-proximity">
       <Navbar sections={["Home", "Schedule", "RSVP", "Venue", "Team", "Notification"]} />
-      <Section id="Home"><GuestHomeSection /></Section>
-      <Section id="Schedule"><ScheduleSection /></Section>
-      <Section id="RSVP"><RSVPSection /></Section>
-      <Section id="Venue"><VenueSection /></Section>
-      <div id="Team" className="snap-start flex items-center justify-center"><TeamSection /></div>
-      <Section id="Notification"><NotificationSection /></Section>
+      <Section id="Home" full><GuestHomeSection /></Section>
+      <Section id="Schedule" full><ScheduleSection /></Section>
+      <Section id="RSVP" full><RSVPSection /></Section>
+      <Section id="Venue" full><VenueSection /></Section>
+      <Section id="Team"><TeamSection /></Section>
+      <Section id="Notification" full><NotificationSection /></Section>
       <Suspense>
         <ModalManager />
       </Suspense>

@@ -9,7 +9,7 @@ export default function Section({ children, id, full = false }) {
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6 }}
       viewport={{ once: true }}
-      className="snap-start h-screen flex items-center justify-center"
+      className={`snap-start flex items-center justify-center ${full ? 'h-screen' : 'py-24'}`}
     >
       {children}
     </motion.section>

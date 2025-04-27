@@ -11,10 +11,10 @@ export default function Home() {
   return (
     <main className="h-screen overflow-y-scroll overflow-x-hidden scroll-smooth snap-y snap-proximity">
       <Navbar sections={["Home", "Story", "Registry", "Guest"]}/>
-      <Section id="Home"><HomeSection /></Section>
-      <div id="Story" className="snap-start flex items-center justify-center"><StorySection /></div>
-      <Section id="Registry"><RegistrySection /></Section>
-      <Section id="Guest"><GuestSection /></Section>
+      <Section id="Home" full><HomeSection /></Section>
+      <Section id="Story"><StorySection /></Section>
+      <Section id="Registry" full><RegistrySection /></Section>
+      <Section id="Guest" full><GuestSection /></Section>
     </main>
   )
 }
