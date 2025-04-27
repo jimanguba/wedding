@@ -6,7 +6,7 @@ import Image from "next/image";
 
 export default function HomeSection() {
   return (
-    <div className="relative flex flex-col justify-center items-center w-full h-full overflow-hidden">
+    <div className="h-screen relative flex flex-col justify-center items-center w-full h-full overflow-hidden">
       {/* Background Image */}
       <div className="absolute inset-0 overflow-hidden z-0">
         <Image

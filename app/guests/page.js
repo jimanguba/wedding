@@ -18,7 +18,7 @@ export default function Guests() {
       <Section id="Schedule"><ScheduleSection /></Section>
       <Section id="RSVP"><RSVPSection /></Section>
       <Section id="Venue"><VenueSection /></Section>
-      <Section id="Team"><TeamSection /></Section>
+      <div id="Team" className="snap-start flex items-center justify-center"><TeamSection /></div>
       <Section id="Notification"><NotificationSection /></Section>
       <Suspense>
         <ModalManager />
