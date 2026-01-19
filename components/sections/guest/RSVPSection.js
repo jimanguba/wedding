@@ -20,7 +20,7 @@ export default function RSVPSection() {
 
     try {
       const res = await fetch(
-        `https://sheetdb.io/api/v1/g73w7wi7dmnil/search?name=${encodeURIComponent(
+        `https://sheetdb.io/api/v1/03fz6dvt2isvu/search?name=${encodeURIComponent(
           nameInput.trim()
         )}`
       );
@@ -73,13 +73,13 @@ export default function RSVPSection() {
       }
 
       const checkResponse = await fetch(
-        `https://sheetdb.io/api/v1/g73w7wi7dmnil/search?name=${payload.name}`
+        `https://sheetdb.io/api/v1/03fz6dvt2isvu/search?name=${payload.name}`
       );
       const existingEntries = await checkResponse.json();
 
       if (existingEntries.length > 0) {
         await fetch(
-          `https://sheetdb.io/api/v1/g73w7wi7dmnil/name/${payload.name}`,
+          `https://sheetdb.io/api/v1/03fz6dvt2isvu/name/${payload.name}`,
           {
             method: "PUT",
             headers: { "Content-Type": "application/json" },
@@ -87,7 +87,7 @@ export default function RSVPSection() {
           }
         );
       } else {
-        await fetch("https://sheetdb.io/api/v1/g73w7wi7dmnil", {
+        await fetch("https://sheetdb.io/api/v1/03fz6dvt2isvu", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ data: payload }),
